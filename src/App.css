@@ -28,6 +28,8 @@
   to { transform: rotate(360deg); }
 }
 
+/* HEADER */
+
 #header {
   margin: 10px 0;
 }
@@ -46,6 +48,8 @@
 #control input {
   margin-right: 10px;
 }
+
+/* GRID */
 
 div.row {
   margin: 0;
@@ -76,4 +80,12 @@ div.grid.grid-revealed.error {
 
 div.grid.grid-revealed.warning {
   background: yellow;
+}
+
+/* ERRORS */
+ul.errors {
+  color: #a94442;
+  background-color: #f2dede;
+  border-color: #ebccd1;
+  padding: 10px;
 }

@@ -9,13 +9,17 @@ class Board extends React.Component {
 		this.state = {
 			width: this.props.width || '',
 			height: this.props.height || '',
-			mineCount: this.props.mineCount || ''
+			mineCount: this.props.mineCount || '',
+			errors: []
 		}
 
 		this.status = this.status.bind(this);
 		this.action = this.action.bind(this);
 		this.drawBoard = this.drawBoard.bind(this);
 		this.syncInput = this.syncInput.bind(this);
+		this.errors = this.errors.bind(this);
+		this.addErrors = this.addErrors.bind(this);
+		this.clearErrors = this.clearErrors.bind(this);
 	}
 
 	status() {
@@ -32,6 +36,32 @@ class Board extends React.Component {
 		}
 
 		return 'Timer'
+	}
+
+	errors() {
+		if (this.state.errors.length === 0) {
+			return;
+		}
+
+		return (
+			<ul className="errors" style={{listStyle: "none"}}>
+				{this.state.errors.map((error) => {
+					return (<li key={hash.MD5(error)}>{error}</li>)
+				})}
+			</ul>
+		)
+	}
+
+	addErrors(errors) {
+		this.setState({
+			errors: errors
+		})
+	}
+
+	clearErrors() {
+		this.setState({
+			errors: []
+		})
 	}
 
 	action() {
@@ -54,7 +84,7 @@ class Board extends React.Component {
 					<a href="#" onClick={this.props.resetBoard}>Reset</a>
 				</div>
 			);
-		}		
+		}
 
 		if (this.props.map.length >0 && this.props.initiated) {
 			return (
@@ -67,12 +97,41 @@ class Board extends React.Component {
 
 	drawBoard(e) {
 		e.preventDefault();
+
+		this.clearErrors();
+
+		let errors = [];
+
+		if (typeof this.state.width === 'undefined' || this.state.width <= 1) {
+			errors.push("Width must be greater than 1");
+		}
+
+		if (typeof this.state.height === 'undefined' || this.state.height <= 1) {
+			errors.push("Height must be greater than 1");
+		}
+
+		if (errors.length > 0) {
+			this.addErrors(errors);
+			return false;
+		}
+
+		const mineMax = this.state.width * this.state.height - 2;
+
+		if (typeof this.state.mineCount === 'undefined' || this.state.mineCount < 2 || this.state.mineCount > mineMax) {
+			errors.push("Mines must be at least 2 and at most " + mineMax);
+		}
+
+		if (errors.length > 0) {
+			this.addErrors(errors);
+			return false;
+		}
+
 		this.props.drawBoard(this.state.width, this.state.height, this.state.mineCount);
 	}
 
 	syncInput(e) {
 		let newState = {};
-		newState[e.target.name] = parseInt(e.target.value);
+		newState[e.target.name] = parseInt(e.target.value, 10);
 		this.setState(newState);
 	}
 
@@ -83,6 +142,8 @@ class Board extends React.Component {
 					<div id="status">{this.status()}</div>
 					{this.action()}
 				</div>
+
+				{this.errors()}
 			
 				{this.props.map.map((row) => {
 					return (
