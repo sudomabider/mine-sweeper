@@ -1,0 +1,67 @@
+@import url('https://fonts.googleapis.com/css?family=Ubuntu+Mono');
+
+* {
+  font-family: 'Ubuntu Mono', monospace;
+}
+
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
+}
+
+.App-header {
+  background-color: #222;
+  padding: 20px;
+  color: white;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+#header {
+  margin: 10px 0;
+}
+
+.status {
+  text-transform: uppercase;
+}
+
+div.row {
+  margin: 0;
+  padding: 0;
+  height: 22px;
+}
+
+div.grid {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  width: 20px;
+  height: 20px;
+  background: #fefefe;
+  border: 1px solid #ddd;
+  vertical-align: top;
+  cursor: pointer;
+}
+
+div.grid.grid-revealed {
+  background: #eee;
+}
+
+div.grid.grid-revealed.error {
+  background: red;
+}
+
+div.grid.grid-revealed.warning {
+  background: yellow;
+}

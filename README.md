@@ -1,0 +1,1 @@
+A web mine sweeper built with React and Redux
