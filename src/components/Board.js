@@ -5,36 +5,81 @@ import hash from 'object-hash'
 class Board extends React.Component {
 	constructor(props) {
 		super(props);
+
+		this.state = {
+			width: this.props.width || '',
+			height: this.props.height || '',
+			mineCount: this.props.mineCount || ''
+		}
+
 		this.status = this.status.bind(this);
-		this.startText = this.startText.bind(this);
+		this.action = this.action.bind(this);
+		this.drawBoard = this.drawBoard.bind(this);
+		this.syncInput = this.syncInput.bind(this);
 	}
 
 	status() {
 		if (this.props.win) {
-			return "You won! | "
+			return "You won!"
 		}
 
 		if (this.props.dead) {
-			return "Game over | "
+			return "Game over"
 		}
 
-		return ''
+		if (!this.props.initiated) {
+			return "Waiting for player"
+		}
+
+		return 'Timer'
 	}
 
-	startText() {
+	action() {
 		if (typeof this.props.map === 'undefined' || this.props.map.length === 0) {
-			return "start";
+			return (
+				<div id="control">
+					<span className="label">Width</span><input type="number" name="width" value={this.state.width} onChange={this.syncInput} />
+					<span className="label">Height</span><input type="number" name="height" value={this.state.height} onChange={this.syncInput} />
+					<span className="label">Mines</span><input type="number" name="mineCount" value={this.state.mineCount} onChange={this.syncInput} />
+					<a href="#" onClick={this.drawBoard}>Start</a>
+				</div>
+			);
 		}
 
-		return "reset";
+		if (this.props.map.length >0 && !this.props.initiated) {
+			return (
+				<div id="control">
+					<a href="#" onClick={this.props.resetBoard}>Reset</a>
+				</div>
+			);
+		}		
+
+		if (this.props.map.length >0 && this.props.initiated) {
+			return (
+				<div id="control">
+					<a href="#" onClick={this.drawBoard}>Start</a> | <a href="#" onClick={this.props.resetBoard}>Reset</a>
+				</div>
+			);
+		}
+	}
+
+	drawBoard(e) {
+		e.preventDefault();
+		this.props.drawBoard(this.state.width, this.state.height, this.state.mineCount);
+	}
+
+	syncInput(e) {
+		let newState = {};
+		newState[e.target.name] = parseInt(e.target.value);
+		this.setState(newState);
 	}
 
 	render() {
 		return (
 			<div>
 				<div id="header">
-					<span className="status">{this.status()}</span>
-					<a href="#" onClick={this.props.drawBoard}>{this.startText()}</a>
+					<div id="status">{this.status()}</div>
+					{this.action()}
 				</div>
 			
 				{this.props.map.map((row) => {

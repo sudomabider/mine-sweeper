@@ -32,8 +32,19 @@
   margin: 10px 0;
 }
 
-.status {
+#status {
   text-transform: uppercase;
+  margin: 10px 0;
+}
+
+#control label,
+#control input {
+  line-height: 20px;
+  margin: 0 5px;
+}
+
+#control input {
+  margin-right: 10px;
 }
 
 div.row {
@@ -54,7 +65,8 @@ div.grid {
   cursor: pointer;
 }
 
-div.grid.grid-revealed {
+div.grid.grid-revealed,
+div.grid.grid-flagged {
   background: #eee;
 }
 

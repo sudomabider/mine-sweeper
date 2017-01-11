@@ -204,9 +204,9 @@ const initialBoardState = {
 	initiated: false,
 	dead: false,
 	win: false,
-	width: 9,
-	height: 9,
-	mineCount: 19
+	width: null,
+	height: null,
+	mineCount: null
 }
 
 export const boardReducer = (state = initialBoardState, action) => {
@@ -222,6 +222,18 @@ export const boardReducer = (state = initialBoardState, action) => {
 				initiated: true,
 				dead: false,
 				win: false
+			})
+		case 'RESET_BOARD':
+			return Object.assign({}, initialBoardState, {
+				width: state.width,
+				height: state.height,
+				mineCount: state.mineCount
+			})
+		case 'SYNC_BOARD':
+			return Object.assign({}, state, {
+				width: action.width,
+				height: action.height,
+				mineCount: action.mineCount,
 			})
 		case 'REVEAL_GRID':
 			return Object.assign({}, state, {

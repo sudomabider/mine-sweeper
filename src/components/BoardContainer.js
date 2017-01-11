@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { drawBoard } from '../actions'
+import { drawBoard, syncBoard, resetBoard } from '../actions'
 import Board from './Board'
 
 const mapStateToProps = (state) => {
@@ -7,15 +7,21 @@ const mapStateToProps = (state) => {
     map: state.boardReducer.map,
     initiated: state.boardReducer.initiated,
     dead: state.boardReducer.dead,
-    win: state.boardReducer.win
+    win: state.boardReducer.win,
+    width: state.boardReducer.width,
+    height: state.boardReducer.height,
+    mineCount: state.boardReducer.mineCount,
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    drawBoard: (e) => {
-      e.preventDefault();
-      dispatch(drawBoard(10, 10));
+    drawBoard: (width, height, count) => {
+      dispatch(syncBoard(width, height, count));
+      dispatch(drawBoard());
+    },
+    resetBoard: () => {
+      dispatch(resetBoard());
     }
   }
 }

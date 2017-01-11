@@ -53,11 +53,13 @@ class Grid extends React.Component {
 	className() {
 		let className = "grid";
 
-
-
 		if (this.props.grid.isRevealed) {
 			className += " grid-revealed"
 		}
+
+		if (this.props.grid.isFlagged) {
+			className += " grid-flagged"
+		}		
 
 		if (this.props.grid.error) {
 			className += " error"

@@ -1,14 +1,29 @@
-export const drawBoard = (width, height) => {
+export const drawBoard = () => {
 	return {
 		type: "DRAW_BOARD"
 	}
 }
 
-export const initBoard = (x, y) => {
+export const initBoard = (x, y, mineCont) => {
 	return {
 		type: "INIT_BOARD",
 		x: x,
 		y: y
+	}
+}
+
+export const resetBoard = () => {
+	return {
+		type: "RESET_BOARD"
+	}
+}
+
+export const syncBoard = (width, height, mineCount) => {
+	return {
+		type: "SYNC_BOARD",
+		width: width,
+		height: height,
+		mineCount: mineCount
 	}
 }
 
