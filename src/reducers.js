@@ -40,8 +40,6 @@ const layMinesInMap = (map, count, exceptX, excepty) => {
 	return grids;
 }
 
-
-
 const calculateNeighboringMines = (map, x, y) => {
 	const positions = [
 		{x: x-1, y: y-1},
@@ -63,6 +61,7 @@ const calculateNeighboringMines = (map, x, y) => {
 	map[y][x].number = count;
 
 	if (count === 0) {
+		map[y][x].isBlock = true;
 		for (const position of positions) {
 			if (typeof map[position.y] !== 'undefined' && typeof map[position.y][position.x] !== 'undefined') {
 				map[position.y][position.x].isBlock = true;
@@ -127,25 +126,21 @@ const revealGrid = (map, x, y) => {
 
 	let right = x+1;
 	if (typeof map[y][right] !== 'undefined' && map[y][right].isBlock && !map[y][right].isRevealed) {
-		map[y][right].isRevealed = true;
 		revealGrid(map, right, y);
 	}
 
 	let left = x-1;
 	if (typeof map[y][left] !== 'undefined' && map[y][left].isBlock && !map[y][left].isRevealed) {
-		map[y][left].isRevealed = true;
 		revealGrid(map, left, y);
 	}
 
 	let top = y-1;
 	if (typeof map[top] !== 'undefined' && typeof map[top][x] !== 'undefined' && map[top][x].isBlock && !map[top][x].isRevealed) {
-		map[top][x].isRevealed = true;
 		revealGrid(map, x, top);
 	}
 
 	let bottom = y+1;
 	if (typeof map[bottom] !== 'undefined' && typeof map[bottom][x] !== 'undefined' && map[bottom][x].isBlock && !map[bottom][x].isRevealed) {
-		map[bottom][x].isRevealed = true;
 		revealGrid(map, x, bottom);
 	}
 

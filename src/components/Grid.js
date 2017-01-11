@@ -63,7 +63,7 @@ class Grid extends React.Component {
 
 		if (this.props.grid.error) {
 			className += " error"
-		} else if (this.props.grid.error) {
+		} else if (this.props.grid.warning) {
 			className += " warning"
 		}
 

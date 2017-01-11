@@ -38,10 +38,12 @@ class Board extends React.Component {
 		if (typeof this.props.map === 'undefined' || this.props.map.length === 0) {
 			return (
 				<div id="control">
-					<span className="label">Width</span><input type="number" name="width" value={this.state.width} onChange={this.syncInput} />
-					<span className="label">Height</span><input type="number" name="height" value={this.state.height} onChange={this.syncInput} />
-					<span className="label">Mines</span><input type="number" name="mineCount" value={this.state.mineCount} onChange={this.syncInput} />
-					<a href="#" onClick={this.drawBoard}>Start</a>
+					<form onSubmit={this.drawBoard}>
+						<span className="label">Width</span><input type="number" name="width" value={this.state.width} onChange={this.syncInput} />
+						<span className="label">Height</span><input type="number" name="height" value={this.state.height} onChange={this.syncInput} />
+						<span className="label">Mines</span><input type="number" name="mineCount" value={this.state.mineCount} onChange={this.syncInput} />
+						<button type="submit">Start</button>
+					</form>
 				</div>
 			);
 		}
@@ -57,7 +59,7 @@ class Board extends React.Component {
 		if (this.props.map.length >0 && this.props.initiated) {
 			return (
 				<div id="control">
-					<a href="#" onClick={this.drawBoard}>Start</a> | <a href="#" onClick={this.props.resetBoard}>Reset</a>
+					<a href="#" onClick={this.drawBoard}>Restart</a> | <a href="#" onClick={this.props.resetBoard}>Reset</a>
 				</div>
 			);
 		}
