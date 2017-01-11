@@ -81,6 +81,10 @@ class Board extends React.Component {
 		if (this.props.map.length >0 && !this.props.initiated) {
 			return (
 				<div id="control">
+					<span className="label">Board:</span>
+					<span className="control">{this.state.width} x {this.state.height}</span>
+					<span className="label">Mines:</span>
+					<span className="control">{this.state.mineCount}</span>
 					<a href="#" onClick={this.props.resetBoard}>Reset</a>
 				</div>
 			);

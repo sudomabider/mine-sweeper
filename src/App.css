@@ -45,7 +45,8 @@
   margin: 0 5px;
 }
 
-#control input {
+#control input,
+#control .control {
   margin-right: 10px;
 }
 
