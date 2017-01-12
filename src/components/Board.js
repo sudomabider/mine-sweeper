@@ -15,6 +15,7 @@ class Board extends React.Component {
 
 		this.status = this.status.bind(this);
 		this.action = this.action.bind(this);
+		this.control = this.control.bind(this);
 		this.drawBoard = this.drawBoard.bind(this);
 		this.syncInput = this.syncInput.bind(this);
 		this.errors = this.errors.bind(this);
@@ -35,7 +36,7 @@ class Board extends React.Component {
 			return "Waiting for player"
 		}
 
-		return 'Timer'
+		return 'Timer | Flags:' + this.props.flags
 	}
 
 	errors() {
@@ -65,6 +66,18 @@ class Board extends React.Component {
 	}
 
 	action() {
+		if (!this.props.initiated) {
+			return (
+				<a href="#" onClick={this.props.resetBoard}>Reset</a>
+			);
+		}
+
+		return (
+			<span><a href="#" onClick={this.drawBoard}>Restart</a> | <a href="#" onClick={this.props.resetBoard}>Reset</a></span>
+		);
+	}
+
+	control() {
 		if (typeof this.props.map === 'undefined' || this.props.map.length === 0) {
 			return (
 				<div id="control">
@@ -78,22 +91,14 @@ class Board extends React.Component {
 			);
 		}
 
-		if (this.props.map.length >0 && !this.props.initiated) {
+		if (this.props.map.length > 0) {
 			return (
 				<div id="control">
 					<span className="label">Board:</span>
 					<span className="control">{this.state.width} x {this.state.height}</span>
 					<span className="label">Mines:</span>
 					<span className="control">{this.state.mineCount}</span>
-					<a href="#" onClick={this.props.resetBoard}>Reset</a>
-				</div>
-			);
-		}
-
-		if (this.props.map.length >0 && this.props.initiated) {
-			return (
-				<div id="control">
-					<a href="#" onClick={this.drawBoard}>Restart</a> | <a href="#" onClick={this.props.resetBoard}>Reset</a>
+					{this.action()}
 				</div>
 			);
 		}
@@ -144,7 +149,7 @@ class Board extends React.Component {
 			<div>
 				<div id="header">
 					<div id="status">{this.status()}</div>
-					{this.action()}
+					{this.control()}
 				</div>
 
 				{this.errors()}

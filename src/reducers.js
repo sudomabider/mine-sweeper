@@ -201,7 +201,8 @@ const initialBoardState = {
 	win: false,
 	width: null,
 	height: null,
-	mineCount: null
+	mineCount: null,
+	flags: 0
 }
 
 export const boardReducer = (state = initialBoardState, action) => {
@@ -236,8 +237,10 @@ export const boardReducer = (state = initialBoardState, action) => {
 				win: calculateWin(state.map.slice())
 			})
 		case 'FLAG_GRID':
+			const flags = state.map[action.y][action.x].isFlagged ? (state.flags - 1) : (state.flags + 1);
 			return Object.assign({}, state, {
-				map: flagGrid(state.map.slice(), action.x, action.y)
+				map: flagGrid(state.map.slice(), action.x, action.y),
+				flags: flags
 			})
 		case 'GAME_OVER':
 			return Object.assign({}, state, {

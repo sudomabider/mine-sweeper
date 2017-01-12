@@ -11,6 +11,7 @@ const mapStateToProps = (state) => {
     width: state.boardReducer.width,
     height: state.boardReducer.height,
     mineCount: state.boardReducer.mineCount,
+    flags: state.boardReducer.flags
   }
 }
 
