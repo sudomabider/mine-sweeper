@@ -176,7 +176,6 @@ const calculateWin = (map) => {
 	for (const row of map) {
 		for (const grid of row) {
 			if (!grid.isMine && !grid.isRevealed) {
-				console.log(grid.position.y + ',' + grid.position.x)
 				return false;
 			}
 		}
@@ -210,6 +209,8 @@ export const boardReducer = (state = initialBoardState, action) => {
 		case 'DRAW_BOARD':
 			return Object.assign({}, state, {
 				map: drawBoard(state.width, state.height),
+				dead: false,
+				win: false,
 				initiated: false
 			})
 		case 'INIT_BOARD':

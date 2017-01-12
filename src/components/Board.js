@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react'
 import GridContainer from './GridContainer'
+import Timer from './Timer'
 import hash from 'object-hash'
 
 class Board extends React.Component {
@@ -10,9 +11,10 @@ class Board extends React.Component {
 			width: this.props.width || '',
 			height: this.props.height || '',
 			mineCount: this.props.mineCount || '',
-			errors: []
+			errors: [],
 		}
 
+		this.timer = this.timer.bind(this);
 		this.status = this.status.bind(this);
 		this.action = this.action.bind(this);
 		this.control = this.control.bind(this);
@@ -23,20 +25,33 @@ class Board extends React.Component {
 		this.clearErrors = this.clearErrors.bind(this);
 	}
 
+	timer() {
+		if (!this.props.initiated) {
+			return;
+		}
+
+		const stop = this.props.win || this.props.dead || !this.props.initiated || false;
+		return (<span><Timer stop={stop} /> | </span>)
+	}
+
 	status() {
 		if (this.props.win) {
-			return "You won!"
+			return (<span id="status">You won!</span>)
 		}
 
 		if (this.props.dead) {
-			return "Game over"
+			return (<span id="status">Game over</span>)
 		}
 
 		if (!this.props.initiated) {
-			return "Waiting for player"
+			return (<span id="status">Waiting for player</span>)
 		}
 
-		return 'Timer | Flags:' + this.props.flags
+		return (
+			<span id="status">
+				{'Flags:' + this.props.flags}
+			</span>
+		)
 	}
 
 	errors() {
@@ -148,7 +163,7 @@ class Board extends React.Component {
 		return (
 			<div>
 				<div id="header">
-					<div id="status">{this.status()}</div>
+					{this.timer()}{this.status()}
 					{this.control()}
 				</div>
 
