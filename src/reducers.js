@@ -30,6 +30,7 @@ const selectRandomGridFromMap = (map, exceptX, exceptY) => {
 
 const layMinesInMap = (map, count, exceptX, excepty) => {
 	let grids = [];
+	console.log(count)
 
 	for (let i = 0; i < count; i++) {
 		const current = selectRandomGridFromMap(map, exceptX, excepty);
@@ -211,7 +212,8 @@ export const boardReducer = (state = initialBoardState, action) => {
 				map: drawBoard(state.width, state.height),
 				dead: false,
 				win: false,
-				initiated: false
+				initiated: false,
+				flags: 0
 			})
 		case 'INIT_BOARD':
 			return Object.assign({}, state, {

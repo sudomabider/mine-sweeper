@@ -18,7 +18,6 @@ class Timer extends React.Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		console.log(nextProps.stop)
 		if (nextProps.stop) {
 			clearInterval(this.timer);
 		}
