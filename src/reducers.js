@@ -7,11 +7,6 @@ const markGridAsMine = (map, x, y) => {
 	return map;
 }
 
-const markGridAsClicked = (map, x, y) => {
-	map[y][x].isClicked = true;
-	return map;	
-}
-
 const selectRandomGridFromMap = (map, exceptX, exceptY) => {
 	let y = '';
 	let x = '';
@@ -107,7 +102,7 @@ const drawBoard = (width, height) => {
 }
 
 const initBoard = (map, x, y, mineCount) => {
-	map = markGridAsClicked(map, x, y);
+	map[y][x].isRevealed = true;
 	layMinesInMap(map, mineCount, x, y);
 	layNumbersInMap(map);
 
